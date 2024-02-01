@@ -2,14 +2,17 @@ import Calender from "../components/Calender";
 import { useRoutineStore } from "../zustand/userRoutine";
 import { useDateStore } from "../zustand/useDate";
 import { styled } from "styled-components";
+import { setRoutinesSort } from "../util/setRoutinesSort";
 
 export function Home() {
   const { curDate, setCurDate } = useDateStore();
   const { routines } = useRoutineStore();
 
+  const sortRoutine = setRoutinesSort(routines);
+
   return (
     <App>
-      <Calender curDate={curDate} routines={routines} />
+      <Calender curDate={curDate} routines={sortRoutine} />
     </App>
   );
 }

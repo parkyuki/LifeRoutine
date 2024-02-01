@@ -1,4 +1,5 @@
 export interface Basic {
+  id: number;
   AmPm: string;
   H: string;
   M: string;
