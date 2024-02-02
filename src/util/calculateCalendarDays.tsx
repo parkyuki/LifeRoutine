@@ -1,7 +1,7 @@
 export const calculateCalendarDays = (curDate: Date): (number | null)[] => {
   const thisLast = new Date(
     curDate.getFullYear(),
-    curDate.getMonth(),
+    curDate.getMonth() + 1,
     0
   ).getDate();
   const firstDay = new Date(curDate.getFullYear(), curDate.getMonth()).getDay();
@@ -14,6 +14,6 @@ export const calculateCalendarDays = (curDate: Date): (number | null)[] => {
   for (let i = 0; i < firstDay; i++) {
     calendarDays.unshift(null);
   }
-  console.log(calendarDays);
+
   return calendarDays;
 };

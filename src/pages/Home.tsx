@@ -1,7 +1,8 @@
-import Calender from "../components/Calender";
+import { styled } from "styled-components";
 import { useRoutineStore } from "../zustand/userRoutine";
 import { useDateStore } from "../zustand/useDate";
-import { styled } from "styled-components";
+import Calender from "../components/Calender";
+import { RoutineList } from "../components/RoutineList";
 import { setRoutinesSort } from "../util/setRoutinesSort";
 
 export function Home() {
@@ -13,6 +14,7 @@ export function Home() {
   return (
     <App>
       <Calender curDate={curDate} routines={sortRoutine} />
+      <RoutineList curDate={curDate} routines={sortRoutine} />
     </App>
   );
 }

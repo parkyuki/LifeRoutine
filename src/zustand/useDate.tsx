@@ -6,6 +6,6 @@ interface DateType {
 }
 
 export const useDateStore = create<DateType>((set) => ({
-  curDate: new Date(),
+  curDate: new Date(2024, 1, 1),
   setCurDate: (newDate) => set({ curDate: newDate }),
 }));

@@ -12,23 +12,27 @@ const Calender = ({ curDate, routines }: CalenderProps) => {
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const daysInMonth = curDate.getMonth();
   const calendarDays = calculateCalendarDays(curDate);
-
+  console.log(curDate.toLocaleDateString());
   return (
     <Article>
       <Week>
         {daysOfWeek.map((it) => (
-          <DaysOfWeek>{it}</DaysOfWeek>
+          <DaysOfWeek key={it}>{it}</DaysOfWeek>
         ))}
       </Week>
       <Days>
-        {calendarDays.map((day) => (
-          <Day key={day}>
-            {day}
-            {routines.map((routine) =>
-              renderRoutine(day, routine, daysInMonth)
-            )}
-          </Day>
-        ))}
+        {calendarDays.map((day, index) =>
+          day !== null ? (
+            <Day key={index}>
+              {day}
+              {routines.map((routine) =>
+                renderRoutine(day, routine, daysInMonth)
+              )}
+            </Day>
+          ) : (
+            <Day key={index} />
+          )
+        )}
       </Days>
     </Article>
   );

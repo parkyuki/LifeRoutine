@@ -15,17 +15,27 @@ export const renderRoutine = (
     const checkDate = new Date(2024, daysInMonth, day);
     const currentDayOfWeek = checkDate.getDay();
     if (routine.Weekly.some((weekly) => weekly === currentDayOfWeek)) {
-      return <WeeklyRoutine color={routine.Color}>주</WeeklyRoutine>;
+      return (
+        <WeeklyRoutine key={routine.id} color={routine.Color}>
+          주
+        </WeeklyRoutine>
+      );
     }
-  } else if (isMonthly(routine)) {
-    if (routine.Monthly.some((monthly) => monthly === day)) {
-      return <MonthlyRoutine color={routine.Color}>월</MonthlyRoutine>;
-    }
+  } else if (
+    isMonthly(routine) &&
+    routine.Monthly.some((monthly) => monthly === day)
+  ) {
+    return (
+      <MonthlyRoutine key={routine.id} color={routine.Color}>
+        월
+      </MonthlyRoutine>
+    );
   } else if (isDaily(routine) && typeof day === "number") {
-    return <DailyRoutine color={routine.Color}>일</DailyRoutine>;
-  } else {
-    // 다른 타입에 대한 처리
-    console.log("is Null");
+    return (
+      <DailyRoutine key={routine.id} color={routine.Color}>
+        일
+      </DailyRoutine>
+    );
   }
 };
 
