@@ -67,6 +67,5 @@ const Days = styled.div`
 const Day = styled.div`
   width: calc(100% / 7);
   font-size: 20px;
-  border-bottom: 1px solid #ececec;
-  border-top: 1px solid #ececec;
+  border-bottom: 2px solid #ececec;
 `;

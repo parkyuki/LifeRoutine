@@ -4,6 +4,7 @@ import { useDateStore } from "../zustand/useDate";
 import Calender from "../components/Calender";
 import { RoutineList } from "../components/RoutineList";
 import { setRoutinesSort } from "../util/setRoutinesSort";
+import { Header } from "../components/Header";
 
 export function Home() {
   const { curDate, setCurDate } = useDateStore();
@@ -13,6 +14,7 @@ export function Home() {
 
   return (
     <App>
+      <Header curDate={curDate} setCurDate={setCurDate} />
       <Calender curDate={curDate} routines={sortRoutine} />
       <RoutineList curDate={curDate} routines={sortRoutine} />
     </App>

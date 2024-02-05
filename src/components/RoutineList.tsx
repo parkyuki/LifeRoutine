@@ -1,5 +1,8 @@
 import * as React from "react";
 import { Daily, Monthly, Routine, Weekly } from "../types/routineType";
+import styled from "styled-components";
+
+import { RenderRoutineDetail } from "../util/renderRoutinDetail.";
 
 export interface CalenderProps {
   curDate: Date;
@@ -22,29 +25,17 @@ export function RoutineList({ curDate, routines }: CalenderProps) {
       // curDate가 시작날짜와 종료날짜 사이에 있는 경우에만 렌더링
       if (curDate >= startDate && curDate <= endDate) {
         if (isDaily(routine) && routine.Daily.length === 0) {
-          return (
-            <div key={routine.id}>
-              <h3>{routine.Title}</h3>
-            </div>
-          );
+          return <RenderRoutineDetail {...routine} />;
         } else if (
           isWeekly(routine) &&
           routine.Weekly.includes(curDate.getDay())
         ) {
-          return (
-            <div key={routine.id}>
-              <h3>{routine.Title}</h3>
-            </div>
-          );
+          return <RenderRoutineDetail {...routine} />;
         } else if (
           isMonthly(routine) &&
           routine.Monthly.includes(curDate.getDate())
         ) {
-          return (
-            <div key={routine.id}>
-              <h3>{routine.Title}</h3>
-            </div>
-          );
+          return <RenderRoutineDetail {...routine} />;
         }
       }
 
@@ -52,5 +43,9 @@ export function RoutineList({ curDate, routines }: CalenderProps) {
     });
   };
 
-  return <div>{renderRoutines()}</div>;
+  return <List>{renderRoutines()}</List>;
 }
+
+const List = styled.section`
+  margin-top: 5%;
+`;
