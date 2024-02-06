@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Routine } from "../types/routineType";
 import { calculateCalendarDays } from "../util/calculateCalendarDays";
-import { renderRoutine } from "../util/renderRoutine";
+import { renderRoutine } from "../util/renderCalenderRoutine";
 
 export interface CalenderProps {
   curDate: Date;

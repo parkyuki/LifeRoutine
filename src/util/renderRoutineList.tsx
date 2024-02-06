@@ -3,6 +3,7 @@ import { Routine } from "../types/routineType";
 import { useRoutineStore } from "../zustand/userRoutine";
 import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import { MdCheckBox } from "react-icons/md";
+import { useState } from "react";
 
 export function RenderRoutineDetail({
   id,
@@ -14,18 +15,28 @@ export function RenderRoutineDetail({
   Success,
 }: Routine) {
   const { toggleRoutineSuccess } = useRoutineStore();
+  const [check, setCheck] = useState(false);
   return (
     <RoutineDetail key={id} color={Color}>
       <Detail>
         {AmPm + " "}
         {H} : {M}
         <RoutineTitle>{Title}</RoutineTitle>
-        {Success ? (
+        {/* {Success ? (
           <Icon onClick={() => toggleRoutineSuccess(id)}>
             <MdCheckBox />
           </Icon>
         ) : (
           <Icon onClick={() => toggleRoutineSuccess(id)}>
+            <MdOutlineCheckBoxOutlineBlank />
+          </Icon>
+        )} */}
+        {check ? (
+          <Icon onClick={() => setCheck(!check)}>
+            <MdCheckBox />
+          </Icon>
+        ) : (
+          <Icon onClick={() => setCheck(!check)}>
             <MdOutlineCheckBoxOutlineBlank />
           </Icon>
         )}
