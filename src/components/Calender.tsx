@@ -2,16 +2,18 @@ import styled from "styled-components";
 import { Routine } from "../types/routineType";
 import { calculateCalendarDays } from "../util/calculateCalendarDays";
 import { renderRoutine } from "../util/renderCalenderRoutine";
+import { useDateStore } from "../zustand/useDate";
 
-export interface CalenderProps {
-  curDate: Date;
-  routines: Routine[];
-}
-
-const Calender = ({ curDate, routines }: CalenderProps) => {
+const Calender = ({ routines }: { routines: Routine[] }) => {
+  const { curDate, setCurDate } = useDateStore();
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const daysInMonth = curDate.getMonth();
   const calendarDays = calculateCalendarDays(curDate);
+  const handleClick = (day: number) => {
+    const newDate = new Date(curDate);
+    newDate.setDate(day);
+    setCurDate(newDate);
+  };
   console.log(curDate.toLocaleDateString());
   return (
     <Article>
@@ -23,7 +25,7 @@ const Calender = ({ curDate, routines }: CalenderProps) => {
       <Days>
         {calendarDays.map((day, index) =>
           day !== null ? (
-            <Day key={index}>
+            <Day key={index} onClick={() => handleClick(day)}>
               {day}
               {routines.map((routine) =>
                 renderRoutine(day, routine, daysInMonth)
@@ -68,4 +70,10 @@ const Day = styled.div`
   width: calc(100% / 7);
   font-size: 20px;
   border-bottom: 2px solid #ececec;
+  cursor: pointer;
+  transition: box-shadow 0.1s ease;
+  &:hover {
+    background-color: #fbfbfb;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+  }
 `;

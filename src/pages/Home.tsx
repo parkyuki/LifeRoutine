@@ -13,22 +13,11 @@ export function Home() {
   const sortRoutine = setRoutinesSort(routines);
 
   return (
-    <App>
+    <HomeSection>
       <Header curDate={curDate} setCurDate={setCurDate} />
-      <Calender curDate={curDate} routines={sortRoutine} />
-      <RoutineList curDate={curDate} routines={sortRoutine} />
-    </App>
+      <Calender routines={sortRoutine} />
+      <RoutineList routines={sortRoutine} />
+    </HomeSection>
   );
 }
-const App = styled.div`
-  min-height: 100vw;
-  padding-left: 20px;
-  padding-right: 20px;
-
-  @media (min-width: 650px) {
-    width: 640px;
-  }
-  @media (max-width: 650px) {
-    width: 90vw;
-  }
-`;
+const HomeSection = styled.section``;

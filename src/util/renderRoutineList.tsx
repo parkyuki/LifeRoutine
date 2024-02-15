@@ -4,42 +4,36 @@ import { useRoutineStore } from "../zustand/userRoutine";
 import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import { MdCheckBox } from "react-icons/md";
 import { useState } from "react";
+interface RenderRoutineDetailProps {
+  curDate: Date;
+  routine: Routine;
+}
 
 export function RenderRoutineDetail({
-  id,
-  Color,
-  AmPm,
-  H,
-  M,
-  Title,
-  Success,
-}: Routine) {
+  curDate,
+  routine: { id, Color, AmPm, H, M, Title, Success },
+}: RenderRoutineDetailProps) {
   const { toggleRoutineSuccess } = useRoutineStore();
-  const [check, setCheck] = useState(false);
+
+  const [checked, setChecked] = useState(Success);
+  const handleClick = () => {
+    // 클릭이 발생할 때마다 checked 상태를 토글합니다.
+    setChecked(!checked);
+  };
+
   return (
     <RoutineDetail key={id} color={Color}>
       <Detail>
         {AmPm + " "}
         {H} : {M}
         <RoutineTitle>{Title}</RoutineTitle>
-        {/* {Success ? (
-          <Icon onClick={() => toggleRoutineSuccess(id)}>
-            <MdCheckBox />
-          </Icon>
-        ) : (
-          <Icon onClick={() => toggleRoutineSuccess(id)}>
-            <MdOutlineCheckBoxOutlineBlank />
-          </Icon>
-        )} */}
-        {check ? (
-          <Icon onClick={() => setCheck(!check)}>
-            <MdCheckBox />
-          </Icon>
-        ) : (
-          <Icon onClick={() => setCheck(!check)}>
-            <MdOutlineCheckBoxOutlineBlank />
-          </Icon>
-        )}
+        <Icon onClick={handleClick}>
+          {checked ? (
+            <MdCheckBox /> // Success가 true일 때 체크된 아이콘을 표시합니다.
+          ) : (
+            <MdOutlineCheckBoxOutlineBlank /> // Success가 false일 때 체크되지 않은 아이콘을 표시합니다.
+          )}
+        </Icon>
       </Detail>
     </RoutineDetail>
   );
