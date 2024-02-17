@@ -46,7 +46,6 @@ const commonStyle = `
 const MonthlyRoutine = styled.div`
   ${commonStyle};
   background-color: ${(props) => props.color};
-  color: red;
 `;
 const WeeklyRoutine = styled.div`
   ${commonStyle};
