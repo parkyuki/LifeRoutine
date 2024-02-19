@@ -14,7 +14,6 @@ export const useRoutineStore = create<RoutineType>((set) => ({
       EndDate: new Date(2024, 11, 31),
       Color: "#ff000091",
       Monthly: [1, 15, 21, 24], // 예시: 1일과 15일
-      Success: false,
     },
     {
       id: 2,
@@ -26,7 +25,6 @@ export const useRoutineStore = create<RoutineType>((set) => ({
       EndDate: new Date(2024, 11, 31),
       Color: "#2aff006e",
       Weekly: [0, 3], // 예시: 일요일과 수요일
-      Success: false,
     },
     {
       id: 3,
@@ -38,21 +36,8 @@ export const useRoutineStore = create<RoutineType>((set) => ({
       EndDate: new Date(2024, 11, 31),
       Color: "#00c7ff75",
       Daily: [], // 예시: 일요일과 수요일
-      Success: false,
     },
   ],
-  toggleRoutineSuccess: (id) => {
-    set((state) => {
-      const updatedRoutines = state.routines.map((routine) => {
-        if (routine.id === id) {
-          return { ...routine, Success: !routine.Success };
-        }
-        return routine;
-      });
-
-      return { routines: updatedRoutines };
-    });
-  },
   addRoutine: (routine) =>
     set((state) => {
       const newRoutines = [...state.routines, { ...routine, id: id++ }];

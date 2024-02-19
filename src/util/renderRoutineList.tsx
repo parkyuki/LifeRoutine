@@ -11,11 +11,9 @@ interface RenderRoutineDetailProps {
 
 export function RenderRoutineDetail({
   curDate,
-  routine: { id, Color, AmPm, H, M, Title, Success },
+  routine: { id, Color, AmPm, H, M, Title },
 }: RenderRoutineDetailProps) {
-  const { toggleRoutineSuccess } = useRoutineStore();
-
-  const [checked, setChecked] = useState(Success);
+  const [checked, setChecked] = useState(false);
   const handleClick = () => {
     // 클릭이 발생할 때마다 checked 상태를 토글합니다.
     setChecked(!checked);
