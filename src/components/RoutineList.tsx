@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Daily, Monthly, Routine, Weekly } from "../types/routineType";
 import styled from "styled-components";
-
+import { Daily, Monthly, Routine, Weekly } from "../types/routineType";
 import { RenderRoutineDetail } from "../util/renderRoutineList";
 import { useDateStore } from "../zustand/useDate";
 import { useNavigate } from "react-router-dom";
@@ -31,17 +30,35 @@ export function RoutineList({ routines }: { routines: Routine[] }) {
       // curDate가 시작날짜와 종료날짜 사이에 있는 경우에만 렌더링
       if (curDate >= startDate && curDate <= endDate) {
         if (isDaily(routine) && routine.Daily.length === 0) {
-          return <RenderRoutineDetail curDate={curDate} routine={routine} />;
+          return (
+            <RenderRoutineDetail
+              key={routine.id}
+              curDate={curDate}
+              routine={routine}
+            />
+          );
         } else if (
           isWeekly(routine) &&
           routine.Weekly.includes(curDate.getDay())
         ) {
-          return <RenderRoutineDetail curDate={curDate} routine={routine} />;
+          return (
+            <RenderRoutineDetail
+              key={routine.id}
+              curDate={curDate}
+              routine={routine}
+            />
+          );
         } else if (
           isMonthly(routine) &&
           routine.Monthly.includes(curDate.getDate())
         ) {
-          return <RenderRoutineDetail curDate={curDate} routine={routine} />;
+          return (
+            <RenderRoutineDetail
+              key={routine.id}
+              curDate={curDate}
+              routine={routine}
+            />
+          );
         }
       }
 

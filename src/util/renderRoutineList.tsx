@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import { Routine } from "../types/routineType";
-import { useRoutineStore } from "../zustand/userRoutine";
 import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import { MdCheckBox } from "react-icons/md";
 import { useState } from "react";
@@ -10,8 +9,7 @@ interface RenderRoutineDetailProps {
 }
 
 export function RenderRoutineDetail({
-  curDate,
-  routine: { id, Color, AmPm, H, M, Title },
+  routine: { id, Color, Time, Title },
 }: RenderRoutineDetailProps) {
   const [checked, setChecked] = useState(false);
   const handleClick = () => {
@@ -22,8 +20,7 @@ export function RenderRoutineDetail({
   return (
     <RoutineDetail key={id} color={Color}>
       <Detail>
-        {AmPm + " "}
-        {H} : {M}
+        {Time}
         <RoutineTitle>{Title}</RoutineTitle>
         <Icon onClick={handleClick}>
           {checked ? (

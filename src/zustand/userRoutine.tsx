@@ -6,34 +6,28 @@ export const useRoutineStore = create<RoutineType>((set) => ({
   routines: [
     {
       id: 1,
-      AmPm: "PM",
-      H: "7",
-      M: "45",
+      Time: "PM 03:24",
       Title: "청소",
-      StartDate: new Date(2024, 0, 1),
-      EndDate: new Date(2024, 11, 31),
+      StartDate: "2024-01-01",
+      EndDate: "2024-12-26",
       Color: "#ff000091",
       Monthly: [1, 15, 21, 24], // 예시: 1일과 15일
     },
     {
       id: 2,
-      AmPm: "PM",
-      H: "7",
-      M: "45",
+      Time: "PM 03:24",
       Title: "운동",
-      StartDate: new Date(2024, 0, 1),
-      EndDate: new Date(2024, 11, 31),
+      StartDate: "2024-01-26",
+      EndDate: "2024-12-26",
       Color: "#2aff006e",
       Weekly: [0, 3], // 예시: 일요일과 수요일
     },
     {
       id: 3,
-      AmPm: "PM",
-      H: "7",
-      M: "45",
+      Time: "PM 03:24",
       Title: "영양제 먹기",
-      StartDate: new Date(2024, 0, 1),
-      EndDate: new Date(2024, 11, 31),
+      StartDate: "2024-01-26",
+      EndDate: "2024-12-26",
       Color: "#00c7ff75",
       Daily: [], // 예시: 일요일과 수요일
     },

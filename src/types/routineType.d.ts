@@ -1,11 +1,9 @@
 export interface Basic {
   id: number;
-  AmPm: string;
-  H: string;
-  M: string;
+  Time: string;
   Title: string;
-  StartDate: Date;
-  EndDate: Date;
+  StartDate: string;
+  EndDate: string;
   Color: string;
 }
 
@@ -23,7 +21,6 @@ export type Routine = Monthly | Weekly | Daily;
 
 export interface RoutineType {
   routines: Routine[];
-
   addRoutine: (routine: Routine) => void;
   removeRoutine: (index: number) => void;
   updateRoutine: (index: number, updatedRoutine: Routine) => void;

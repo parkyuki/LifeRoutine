@@ -2,21 +2,15 @@ import * as React from "react";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  TextField,
-} from "@mui/material";
+import { Button, TextField } from "@mui/material";
 
 import styled from "styled-components";
 import { useDateStore } from "../zustand/useDate";
 import dayjs, { Dayjs } from "dayjs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { colors } from "../util/colorsSet";
-import { ColorButton } from "../components/ColorButton";
+import { ColorButton } from "../components/common/ColorButton";
+import RoutineRadio from "../components/common/Radio";
 
 export interface INewProps {}
 
@@ -25,30 +19,50 @@ export function New(props: INewProps) {
   const [colorNum, setColorNum] = useState<string>();
   const [title, setTitle] = useState<string>("");
   const [time, setTime] = useState<Dayjs>(dayjs(curDate));
-  const [ampm, setAmpm] = useState<string>("");
   const [startDate, setStartDate] = useState<Dayjs>(dayjs(curDate));
-  const [endDate, setEndDate] = useState<Dayjs | null>(dayjs(curDate));
+  const [endDate, setEndDate] = useState<Dayjs>(dayjs(curDate));
+  const [selectedDays, setSelectedDays] = useState<number[]>([]);
+  const [selectRoutine, setSelectRoutine] = useState("Daily");
 
-  //const formattedDate: Date = value.toDate();
-  useEffect(() => {
-    //const formattedDate = time.format("A hh:mm ");
-    const formattedDate = startDate.format("YYYY-MM-DD ");
-    console.log("startDate", formattedDate);
-  }, [startDate]);
+  const handleClickDay = (value: number) => {
+    const index = selectedDays.indexOf(value);
+    if (index === -1) {
+      setSelectedDays([...selectedDays, value]);
+    } else {
+      setSelectedDays(
+        selectedDays.filter((selectedDay) => selectedDay !== value)
+      );
+    }
+  };
+  selectedDays.sort((a, b) => a - b);
 
+  console.log("selectedDays", selectedDays);
   const handleClickBtn = (colorNum: string) => {
     setColorNum(colorNum);
   };
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
-  const handleAmPm = (event: SelectChangeEvent<string>) => {
-    setAmpm(event.target.value);
-  };
   const handleTime = (newTime: Dayjs | null, _context: any) => {
     if (newTime) {
       setTime(newTime);
     }
+  };
+  const handleCheckRoutine = (option: string) => {
+    setSelectRoutine(option);
+  };
+  const createBtn = () => {
+    const formattedDate = time.format("A hh:mm ");
+    const sDate = startDate.format("YYYY-MM-DD ");
+    const eDate = endDate.format("YYYY-MM-DD ");
+    const dummy = {
+      title,
+      formattedDate,
+      sDate,
+      eDate,
+      colorNum,
+    };
+    console.log(dummy);
   };
 
   return (
@@ -63,18 +77,6 @@ export function New(props: INewProps) {
           value={title}
           onChange={handleTitle}
         />
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel id="AmPm-standard-label">오전오후</InputLabel>
-          <Select
-            id="AmPm-standard-label"
-            value={ampm}
-            onChange={handleAmPm}
-            label="AmPm"
-          >
-            <MenuItem value={"오전"}>오전</MenuItem>
-            <MenuItem value={"오후"}>오후</MenuItem>
-          </Select>
-        </FormControl>
         <TimePicker label="시간" value={time} onChange={handleTime} />
         <DatePicker
           format="YYYY / MM / DD"
@@ -86,7 +88,7 @@ export function New(props: INewProps) {
           format="YYYY / MM / DD"
           label="Controlled picker"
           value={endDate}
-          onChange={(newValue) => setEndDate(newValue)}
+          onChange={(newValue) => setEndDate(newValue as Dayjs)}
         />
       </NewSection>
       {colors.map((it) => (
@@ -97,6 +99,14 @@ export function New(props: INewProps) {
           isSelect={it.color === colorNum}
         />
       ))}
+      <RoutineRadio
+        selectRoutine={selectRoutine}
+        handleCheckRoutine={handleCheckRoutine}
+        selectedDays={selectedDays}
+        handleClickDay={handleClickDay}
+        setSelectedDays={setSelectedDays}
+      />
+      <Button onClick={createBtn}>확인</Button>
     </LocalizationProvider>
   );
 }

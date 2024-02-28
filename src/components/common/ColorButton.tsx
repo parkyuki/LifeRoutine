@@ -9,7 +9,6 @@ interface ColorButtonProps {
 }
 
 export const ColorButton = ({
-  color_id,
   colorName,
   color,
   onClick,
@@ -18,7 +17,7 @@ export const ColorButton = ({
   return (
     <ColorBtn
       onClick={() => onClick(color)}
-      style={{ backgroundColor: color }}
+      color={color}
       className={isSelect ? "selected" : ""}
     >
       {colorName}
@@ -32,9 +31,10 @@ const ColorBtn = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-family: "Poor Story", system-ui;
 
   &.selected {
     font-weight: bold;
-    border: 1px solid;
+    border: 1px solid ${(props) => props.color};
   }
 `;
