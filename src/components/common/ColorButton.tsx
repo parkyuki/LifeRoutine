@@ -27,14 +27,16 @@ export const ColorButton = ({
 
 const ColorBtn = styled.button`
   background-color: ${(props) => props.color};
-  padding: 8px 16px;
+  width: 70px;
+  height: 35px;
+  font-size: 15px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-family: "Poor Story", system-ui;
-
+  font-weight: bold;
+  margin-right: 5px;
   &.selected {
-    font-weight: bold;
-    border: 1px solid ${(props) => props.color};
+    border: 4px solid ${(props) => props.color};
   }
 `;

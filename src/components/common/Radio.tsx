@@ -4,7 +4,6 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel, {
   FormControlLabelProps,
 } from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { styled } from "styled-components";
 import { days, weekday } from "../../util/days";
@@ -16,6 +15,7 @@ interface SelectRoutineProps {
   selectedDays: number[];
   handleClickDay: (value: number) => void;
   setSelectedDays: React.Dispatch<React.SetStateAction<number[]>>;
+  colorNum: string;
 }
 
 export default function RoutineRadio({
@@ -24,6 +24,7 @@ export default function RoutineRadio({
   selectedDays,
   handleClickDay,
   setSelectedDays,
+  colorNum,
 }: SelectRoutineProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDays([]);
@@ -54,30 +55,34 @@ export default function RoutineRadio({
         </RadioGroup>
       </RoutineRadioArticle>
       <SelectArticle>
-        {selectRoutine === "Daily" && <div>daily</div>}
+        {selectRoutine === "Daily" && (
+          <DailyMsg>Daily는 매일 반복됩니다.</DailyMsg>
+        )}
         {selectRoutine === "Weekly" && (
-          <div>
+          <WeeklyBtn>
             {weekday.map((it, index) => (
               <SelectDay
                 key={index}
                 value={it}
                 onClick={() => handleClickDay(index)}
                 isSelect={selectedDays.includes(index)}
+                color={colorNum}
               />
             ))}
-          </div>
+          </WeeklyBtn>
         )}
         {selectRoutine === "Monthly" && (
-          <StyledButtonGroup>
+          <MonthlyBtn>
             {days.map((day) => (
               <SelectDay
                 key={day}
                 value={day}
                 onClick={() => handleClickDay(day)}
                 isSelect={selectedDays.includes(day)}
+                color={colorNum}
               />
             ))}
-          </StyledButtonGroup>
+          </MonthlyBtn>
         )}
       </SelectArticle>
     </RadioSection>
@@ -90,20 +95,37 @@ const RadioSection = styled.section`
   align-items: center;
 `;
 const RoutineRadioArticle = styled.article`
-  margin: 0 80px;
+  margin: 0 80px 0 110px;
 `;
 const SelectArticle = styled.article``;
 
-const StyledButtonGroup = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: 200px;
-  height: 100px;
-  border: 1px solid #b9b9b9;
-  padding: 6px;
-`;
 const FormControlLabelA = styled(FormControlLabel)<FormControlLabelProps>(
   () => ({
     "& .MuiTypography-root": { fontFamily: '"Poor Story", system-ui' },
   })
 );
+
+const DailyMsg = styled.div`
+  font-weight: bold;
+`;
+const WeeklyBtn = styled.div`
+  border: 1px solid #8b8b8b;
+  border-radius: 10px;
+  padding: 3%;
+  width: 224px;
+
+  button {
+    width: 28px;
+    font-size: 18px;
+    margin: 0px 2px;
+  }
+`;
+
+const MonthlyBtn = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 232px;
+  border: 1px solid #b9b9b9;
+  padding: 6px;
+  border-radius: 10px;
+`;

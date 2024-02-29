@@ -3,7 +3,6 @@ import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Button, TextField } from "@mui/material";
-
 import styled from "styled-components";
 import { useDateStore } from "../zustand/useDate";
 import dayjs, { Dayjs } from "dayjs";
@@ -16,7 +15,7 @@ export interface INewProps {}
 
 export function New(props: INewProps) {
   const { curDate } = useDateStore();
-  const [colorNum, setColorNum] = useState<string>();
+  const [colorNum, setColorNum] = useState<string>("#ececec");
   const [title, setTitle] = useState<string>("");
   const [time, setTime] = useState<Dayjs>(dayjs(curDate));
   const [startDate, setStartDate] = useState<Dayjs>(dayjs(curDate));
@@ -39,6 +38,7 @@ export function New(props: INewProps) {
   console.log("selectedDays", selectedDays);
   const handleClickBtn = (colorNum: string) => {
     setColorNum(colorNum);
+    console.log("colorNum", colorNum);
   };
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -67,50 +67,101 @@ export function New(props: INewProps) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <NewHeader>{curDate.toLocaleDateString()} 루틴</NewHeader>
       <NewSection>
         <TextField
           required
           id="Routine Title"
           label="루틴 제목"
-          size="small"
           variant="standard"
           value={title}
           onChange={handleTitle}
+          sx={{
+            width: "200px",
+            "& .MuiFormLabel-root": FontStyle,
+            "& .MuiInputBase-root": FontStyle,
+          }}
         />
-        <TimePicker label="시간" value={time} onChange={handleTime} />
-        <DatePicker
-          format="YYYY / MM / DD"
-          label="Controlled picker"
-          value={startDate}
-          onChange={(newValue) => setStartDate(newValue as Dayjs)}
+        <TimePicker
+          label="시간"
+          value={time}
+          onChange={handleTime}
+          sx={{
+            width: "200px",
+            margin: "5% 0 3% 0",
+            "& .MuiFormLabel-root": FontStyle,
+            "& .MuiInputBase-root": FontStyle,
+          }}
         />
-        <DatePicker
-          format="YYYY / MM / DD"
-          label="Controlled picker"
-          value={endDate}
-          onChange={(newValue) => setEndDate(newValue as Dayjs)}
-        />
+        <DatePickerDiv>
+          <DatePicker
+            format="YYYY / MM / DD"
+            label="시작일"
+            value={startDate}
+            onChange={(newValue) => setStartDate(newValue as Dayjs)}
+            sx={{
+              width: "200px",
+              marginRight: "10px",
+              "& .MuiFormLabel-root": FontStyle,
+              "& .MuiInputBase-root": FontStyle,
+            }}
+          />
+          <DatePicker
+            format="YYYY / MM / DD"
+            label="종료일"
+            value={endDate}
+            onChange={(newValue) => setEndDate(newValue as Dayjs)}
+            sx={{
+              width: "200px",
+              marginLeft: "10px",
+              "& .MuiFormLabel-root": FontStyle,
+              "& .MuiInputBase-root": FontStyle,
+            }}
+          />
+        </DatePickerDiv>
       </NewSection>
-      {colors.map((it) => (
-        <ColorButton
-          key={it.color_id}
-          {...it}
-          onClick={handleClickBtn}
-          isSelect={it.color === colorNum}
-        />
-      ))}
+      <ButtonGroup>
+        {colors.map((it) => (
+          <ColorButton
+            key={it.color_id}
+            {...it}
+            onClick={handleClickBtn}
+            isSelect={it.color === colorNum}
+          />
+        ))}
+      </ButtonGroup>
       <RoutineRadio
         selectRoutine={selectRoutine}
         handleCheckRoutine={handleCheckRoutine}
         selectedDays={selectedDays}
         handleClickDay={handleClickDay}
         setSelectedDays={setSelectedDays}
+        colorNum={colorNum}
       />
       <Button onClick={createBtn}>확인</Button>
     </LocalizationProvider>
   );
 }
-
+const NewHeader = styled.div`
+  margin: 5%;
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  border-bottom: 1px solid #6f6f6f;
+  padding-bottom: 3%;
+`;
 const NewSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 3%;
 `;
+const DatePickerDiv = styled.div``;
+const ButtonGroup = styled.section`
+  text-align: center;
+  margin: 5% 0;
+`;
+const FontStyle = {
+  fontFamily: '"Poor Story", system-ui',
+  fontWeight: "bold",
+};
