@@ -2,7 +2,7 @@ import * as React from "react";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Button, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import styled from "styled-components";
 import { useDateStore } from "../zustand/useDate";
 import dayjs, { Dayjs } from "dayjs";
@@ -10,6 +10,7 @@ import { useState } from "react";
 import { colors } from "../util/colorsSet";
 import { ColorButton } from "../components/common/ColorButton";
 import RoutineRadio from "../components/common/Radio";
+import CreateBtn from "../components/common/CreateBtn";
 
 export interface INewProps {}
 
@@ -35,10 +36,8 @@ export function New(props: INewProps) {
   };
   selectedDays.sort((a, b) => a - b);
 
-  console.log("selectedDays", selectedDays);
   const handleClickBtn = (colorNum: string) => {
     setColorNum(colorNum);
-    console.log("colorNum", colorNum);
   };
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -50,19 +49,6 @@ export function New(props: INewProps) {
   };
   const handleCheckRoutine = (option: string) => {
     setSelectRoutine(option);
-  };
-  const createBtn = () => {
-    const formattedDate = time.format("A hh:mm ");
-    const sDate = startDate.format("YYYY-MM-DD ");
-    const eDate = endDate.format("YYYY-MM-DD ");
-    const dummy = {
-      title,
-      formattedDate,
-      sDate,
-      eDate,
-      colorNum,
-    };
-    console.log(dummy);
   };
 
   return (
@@ -138,7 +124,15 @@ export function New(props: INewProps) {
         setSelectedDays={setSelectedDays}
         colorNum={colorNum}
       />
-      <Button onClick={createBtn}>확인</Button>
+      <CreateBtn
+        time={time}
+        startDate={startDate}
+        endDate={endDate}
+        title={title}
+        colorNum={colorNum}
+        selectedDays={selectedDays}
+        selectRoutine={selectRoutine}
+      />
     </LocalizationProvider>
   );
 }

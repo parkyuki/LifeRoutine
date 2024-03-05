@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { RoutineType } from "../types/routineType";
 
-let id = 3;
 export const useRoutineStore = create<RoutineType>((set) => ({
   routines: [
     {
@@ -34,7 +33,8 @@ export const useRoutineStore = create<RoutineType>((set) => ({
   ],
   addRoutine: (routine) =>
     set((state) => {
-      const newRoutines = [...state.routines, { ...routine, id: id++ }];
+      const newRoutines = [...state.routines, { ...routine }];
+      console.log("추가 성공");
       return { routines: newRoutines };
     }),
 

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Routine } from "../types/routineType";
 import { calculateCalendarDays } from "../util/calculateCalendarDays";
-import { renderRoutine } from "../util/renderCalenderRoutine";
+import { RenderRoutine } from "../util/renderCalenderRoutine";
 import { useDateStore } from "../zustand/useDate";
 
 const Calender = ({ routines }: { routines: Routine[] }) => {
@@ -14,7 +14,7 @@ const Calender = ({ routines }: { routines: Routine[] }) => {
     newDate.setDate(day);
     setCurDate(newDate);
   };
-  console.log(curDate.toLocaleDateString());
+
   return (
     <Article>
       <Week>
@@ -28,7 +28,7 @@ const Calender = ({ routines }: { routines: Routine[] }) => {
             <Day key={index} onClick={() => handleClick(day)}>
               {day}
               {routines.map((routine) =>
-                renderRoutine(day, routine, daysInMonth)
+                RenderRoutine(day, routine, daysInMonth)
               )}
             </Day>
           ) : (

@@ -11,7 +11,7 @@ export function Home() {
   const { routines } = useRoutineStore();
 
   const sortRoutine = setRoutinesSort(routines);
-
+  console.log(routines);
   return (
     <HomeSection>
       <Header curDate={curDate} setCurDate={setCurDate} />
