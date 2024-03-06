@@ -19,6 +19,7 @@ export function RoutineList({ routines }: { routines: Routine[] }) {
     return routines.map((routine) => {
       const startDate = new Date(routine.StartDate);
       const endDate = new Date(routine.EndDate);
+      endDate.setDate(endDate.getDate() + 1);
 
       const isDaily = (routine: Routine): routine is Daily =>
         "Daily" in routine;
@@ -28,37 +29,19 @@ export function RoutineList({ routines }: { routines: Routine[] }) {
         "Monthly" in routine;
 
       // curDate가 시작날짜와 종료날짜 사이에 있는 경우에만 렌더링
-      if (curDate >= startDate && curDate <= endDate) {
+      if (curDate >= startDate && curDate < endDate) {
         if (isDaily(routine) && routine.Daily.length === 0) {
-          return (
-            <RenderRoutineDetail
-              key={routine.id}
-              curDate={curDate}
-              routine={routine}
-            />
-          );
+          return <RenderRoutineDetail key={routine.id} routine={routine} />;
         } else if (
           isWeekly(routine) &&
           routine.Weekly.includes(curDate.getDay())
         ) {
-          return (
-            <RenderRoutineDetail
-              key={routine.id}
-              curDate={curDate}
-              routine={routine}
-            />
-          );
+          return <RenderRoutineDetail key={routine.id} routine={routine} />;
         } else if (
           isMonthly(routine) &&
           routine.Monthly.includes(curDate.getDate())
         ) {
-          return (
-            <RenderRoutineDetail
-              key={routine.id}
-              curDate={curDate}
-              routine={routine}
-            />
-          );
+          return <RenderRoutineDetail key={routine.id} routine={routine} />;
         }
       }
 

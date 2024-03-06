@@ -4,7 +4,6 @@ import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import { MdCheckBox } from "react-icons/md";
 import { useState } from "react";
 interface RenderRoutineDetailProps {
-  curDate: Date;
   routine: Routine;
 }
 
