@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Dayjs } from "dayjs";
 import { Routine } from "../../types/routineType";
 import { useRoutineStore } from "../../zustand/userRoutine";
@@ -23,8 +23,10 @@ const CreateBtn: React.FC<ICreateBtnProps> = ({
   selectedDays,
   selectRoutine,
 }) => {
-  const { addRoutine } = useRoutineStore();
-  const dataId = useRef(0);
+  const { routines, addRoutine } = useRoutineStore();
+  const lastId = routines.length > 0 ? routines[routines.length - 1].id : 0;
+  const nextId = lastId + 1;
+
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -36,7 +38,7 @@ const CreateBtn: React.FC<ICreateBtnProps> = ({
 
     if (selectRoutine === "Weekly") {
       dummy = {
-        id: dataId.current,
+        id: nextId,
         Time: formattedDate,
         Title: title,
         StartDate: sDate,
@@ -46,7 +48,7 @@ const CreateBtn: React.FC<ICreateBtnProps> = ({
       };
     } else if (selectRoutine === "Daily") {
       dummy = {
-        id: dataId.current,
+        id: nextId,
         Time: formattedDate,
         Title: title,
         StartDate: sDate,
@@ -56,7 +58,7 @@ const CreateBtn: React.FC<ICreateBtnProps> = ({
       };
     } else if (selectRoutine === "Monthly") {
       dummy = {
-        id: dataId.current,
+        id: nextId,
         Time: formattedDate,
         Title: title,
         StartDate: sDate,
@@ -68,7 +70,6 @@ const CreateBtn: React.FC<ICreateBtnProps> = ({
       throw new Error("잘못된 루틴 유형입니다.");
     }
     addRoutine(dummy);
-    dataId.current += 1;
     navigate("/");
   };
 
