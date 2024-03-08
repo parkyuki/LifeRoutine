@@ -1,21 +1,31 @@
 import styled from "styled-components";
 import { Daily, Monthly, Routine, Weekly } from "../types/routineType";
+import { getDateWithoutTime } from "./getDateWithoutTime";
 
 export const RenderRoutine = (
   day: number,
   routine: Routine,
   daysInMonth: number
 ) => {
-  const startDate = new Date(routine.StartDate);
-  const endDate = new Date(routine.EndDate);
+  // const startDate = new Date(routine.StartDate);
+  // const endDate = new Date(routine.EndDate);
 
   const isDaily = (routine: Routine): routine is Daily => "Daily" in routine;
   const isWeekly = (routine: Routine): routine is Weekly => "Weekly" in routine;
   const isMonthly = (routine: Routine): routine is Monthly =>
     "Monthly" in routine;
 
-  const checkDate = new Date(2024, daysInMonth, day);
-
+  const checkDate = getDateWithoutTime(new Date(2024, daysInMonth, day));
+  const startDate = getDateWithoutTime(new Date(routine.StartDate));
+  const endDate = getDateWithoutTime(new Date(routine.EndDate));
+  console.log(
+    "checkDate",
+    checkDate,
+    "endDate",
+    endDate,
+    "startDate",
+    startDate
+  );
   if (checkDate >= startDate && checkDate <= endDate) {
     if (isWeekly(routine) && typeof day === "number") {
       const currentDayOfWeek = checkDate.getDay();

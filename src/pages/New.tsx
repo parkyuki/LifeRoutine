@@ -8,9 +8,9 @@ import { useDateStore } from "../zustand/useDate";
 import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
 import { colors } from "../util/colorsSet";
-import { ColorButton } from "../components/common/ColorButton";
-import RoutineRadio from "../components/common/Radio";
-import CreateBtn from "../components/common/CreateBtn";
+import { ColorButton } from "../components/NewPage/ColorButton";
+import RoutineRadio from "../components/NewPage/Radio";
+import CreateBtn from "../components/NewPage/CreateBtn";
 
 export interface INewProps {}
 
@@ -39,14 +39,7 @@ export function New(props: INewProps) {
   const handleClickBtn = (colorNum: string) => {
     setColorNum(colorNum);
   };
-  const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
-  };
-  const handleTime = (newTime: Dayjs | null, _context: any) => {
-    if (newTime) {
-      setTime(newTime);
-    }
-  };
+
   const handleCheckRoutine = (option: string) => {
     setSelectRoutine(option);
   };
@@ -61,7 +54,7 @@ export function New(props: INewProps) {
           label="루틴 제목"
           variant="standard"
           value={title}
-          onChange={handleTitle}
+          onChange={(e) => setTitle(e.target.value)}
           sx={{
             width: "200px",
             "& .MuiFormLabel-root": FontStyle,
@@ -71,7 +64,7 @@ export function New(props: INewProps) {
         <TimePicker
           label="시간"
           value={time}
-          onChange={handleTime}
+          onChange={(newValue) => setTime(newValue as Dayjs)}
           sx={{
             width: "200px",
             margin: "5% 0 3% 0",
@@ -124,15 +117,17 @@ export function New(props: INewProps) {
         setSelectedDays={setSelectedDays}
         colorNum={colorNum}
       />
-      <CreateBtn
-        time={time}
-        startDate={startDate}
-        endDate={endDate}
-        title={title}
-        colorNum={colorNum}
-        selectedDays={selectedDays}
-        selectRoutine={selectRoutine}
-      />
+      <CenteredDiv>
+        <CreateBtn
+          time={time}
+          startDate={startDate}
+          endDate={endDate}
+          title={title}
+          colorNum={colorNum}
+          selectedDays={selectedDays}
+          selectRoutine={selectRoutine}
+        />
+      </CenteredDiv>
     </LocalizationProvider>
   );
 }
@@ -159,3 +154,8 @@ const FontStyle = {
   fontFamily: '"Poor Story", system-ui',
   fontWeight: "bold",
 };
+const CenteredDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 6% 0;
+`;

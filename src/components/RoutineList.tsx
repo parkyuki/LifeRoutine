@@ -4,6 +4,7 @@ import { Daily, Monthly, Routine, Weekly } from "../types/routineType";
 import { RenderRoutineDetail } from "../util/renderRoutineList";
 import { useDateStore } from "../zustand/useDate";
 import { useNavigate } from "react-router-dom";
+import { getDateWithoutTime } from "../util/getDateWithoutTime";
 
 export interface CalenderProps {
   curDate: Date;
@@ -17,9 +18,10 @@ export function RoutineList({ routines }: { routines: Routine[] }) {
 
   const renderRoutines = () => {
     return routines.map((routine) => {
-      const startDate = new Date(routine.StartDate);
-      const endDate = new Date(routine.EndDate);
-      endDate.setDate(endDate.getDate() + 1);
+      const startDate = getDateWithoutTime(new Date(routine.StartDate));
+      const endDate = getDateWithoutTime(new Date(routine.EndDate));
+      const checkDate = getDateWithoutTime(curDate);
+      // endDate.setDate(endDate.getDate() + 1);
 
       const isDaily = (routine: Routine): routine is Daily =>
         "Daily" in routine;
@@ -29,7 +31,7 @@ export function RoutineList({ routines }: { routines: Routine[] }) {
         "Monthly" in routine;
 
       // curDate가 시작날짜와 종료날짜 사이에 있는 경우에만 렌더링
-      if (curDate >= startDate && curDate < endDate) {
+      if (checkDate >= startDate && checkDate <= endDate) {
         if (isDaily(routine) && routine.Daily.length === 0) {
           return <RenderRoutineDetail key={routine.id} routine={routine} />;
         } else if (

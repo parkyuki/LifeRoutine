@@ -1,8 +1,9 @@
 import React from "react";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { Routine } from "../../types/routineType";
 import { useRoutineStore } from "../../zustand/userRoutine";
 import { useNavigate } from "react-router-dom";
+import { styled } from "styled-components";
 
 interface ICreateBtnProps {
   time: Dayjs;
@@ -30,9 +31,9 @@ const CreateBtn: React.FC<ICreateBtnProps> = ({
   const navigate = useNavigate();
 
   const handleClick = () => {
-    const formattedDate = time.format("A hh:mm ");
-    const sDate = startDate.format("YYYY-MM-DD ");
-    const eDate = endDate.format("YYYY-MM-DD ");
+    const formattedDate = time.format("A hh:mm");
+    const sDate = startDate.format("YYYY-MM-DD");
+    const eDate = endDate.format("YYYY-MM-DD");
 
     let dummy: Routine;
 
@@ -73,7 +74,23 @@ const CreateBtn: React.FC<ICreateBtnProps> = ({
     navigate("/");
   };
 
-  return <button onClick={handleClick}>루틴 생성</button>;
+  return <Btn onClick={handleClick}>루틴 생성</Btn>;
 };
 
 export default CreateBtn;
+const Btn = styled.button`
+  font-family: "Poor Story", system-ui;
+  background-color: #cdcdcd;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
